@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, input, Input, KeyCode, Vec3, Vec2, Vec4 } from 'cc';
+import { _decorator, Component, Node, input, Input, KeyCode, Vec3, Vec2, Vec4, Animation, Sprite, resources, SpriteFrame, ImageAsset } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
@@ -28,8 +28,10 @@ export class PlayerControl extends Component {
 
 
     move: Vec4 = new Vec4(0, 0, 0, 0)
+    movePlay: boolean = false
 
     start () {
+        resources.preload('images/zhanli', SpriteFrame)
         input.on(Input.EventType.KEY_DOWN, this.moveKeyDown, this)
         input.on(Input.EventType.KEY_UP, this.moveKeyUp, this)
     }
@@ -124,16 +126,51 @@ export class PlayerControl extends Component {
 
     update (deltaTime: number) {
         // [4]
+        let b = false
         if (this.move.x > 0) {
+            b = true
+            if (!this.movePlay) {
+                this.startRunAnimation()
+            }
+            this.node.setScale(1, 1, 1)
             this.node.setPosition(new Vec3(this.node.position.x + this.moveSpeed * deltaTime, this.node.position.y, 0))
         } else if (this.move.x < 0) {
+            b = true
+            if (!this.movePlay) {
+                this.startRunAnimation()
+            }
+            this.node.setScale(-1, 1, 1)
             this.node.setPosition(new Vec3(this.node.position.x - this.moveSpeed * deltaTime, this.node.position.y, 0))
         }
         if (this.move.y > 0) {
+            b = true
+            if (!this.movePlay) {
+                this.startRunAnimation()
+            }
             this.node.setPosition(new Vec3(this.node.position.x, this.node.position.y + (this.moveSpeed * deltaTime / 2), 0))
         } else if (this.move.y < 0) {
+            b = true
+            if (!this.movePlay) {
+                this.startRunAnimation()
+            }
             this.node.setPosition(new Vec3(this.node.position.x , this.node.position.y - (this.moveSpeed * deltaTime / 2), 0))
         }
+        if (!b) {
+            this.stopRunAnimation()
+        }
+    }
+    startRunAnimation() {
+        const ani = this.getComponent(Animation)
+        ani.play("run")
+        this.movePlay = true
+    }
+    stopRunAnimation() {
+        const ani = this.getComponent(Animation)
+        ani.stop()
+        resources.load("images/zhanli", ImageAsset, (err: any, img) => {
+            this.getComponent(Sprite).spriteFrame = SpriteFrame.createWithImage(img)
+        })
+        this.movePlay = false
     }
 }
 

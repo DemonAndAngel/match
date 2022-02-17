@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>run1.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{20,55}</string>
+                <key>spriteSourceSize</key>
+                <string>{20,55}</string>
+                <key>textureRect</key>
+                <string>{{32,173},{20,55}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>1 2 3 0 1 3</string>
+                <key>vertices</key>
+                <string>20 55 0 55 0 0 20 0</string>
+                <key>verticesUV</key>
+                <string>52 228 32 228 32 173 52 173</string>
+            </dict>
+            <key>run2.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{37,56}</string>
+                <key>spriteSourceSize</key>
+                <string>{37,56}</string>
+                <key>textureRect</key>
+                <string>{{1,115},{37,56}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>3 4 5 0 3 5 0 2 3 0 1 2</string>
+                <key>vertices</key>
+                <string>37 56 0 56 0 23 2 17 14 0 37 0</string>
+                <key>verticesUV</key>
+                <string>38 171 1 171 1 138 3 132 15 115 38 115</string>
+            </dict>
+            <key>run3.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{48,53}</string>
+                <key>spriteSourceSize</key>
+                <string>{48,53}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{48,53}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>0 3 4 0 2 3 0 1 2</string>
+                <key>vertices</key>
+                <string>48 53 0 53 0 21 21 0 48 0</string>
+                <key>verticesUV</key>
+                <string>49 54 1 54 1 22 22 1 49 1</string>
+            </dict>
+            <key>run4.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{43,57}</string>
+                <key>spriteSourceSize</key>
+                <string>{43,57}</string>
+                <key>textureRect</key>
+                <string>{{1,56},{43,57}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>0 3 4 0 2 3 0 1 2</string>
+                <key>vertices</key>
+                <string>43 57 0 57 0 26 26 0 43 0</string>
+                <key>verticesUV</key>
+                <string>44 113 1 113 1 82 27 56 44 56</string>
+            </dict>
+            <key>run5.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{29,56}</string>
+                <key>spriteSourceSize</key>
+                <string>{29,56}</string>
+                <key>textureRect</key>
+                <string>{{1,173},{29,56}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>1 2 3 0 1 3</string>
+                <key>vertices</key>
+                <string>29 56 0 56 0 0 29 0</string>
+                <key>verticesUV</key>
+                <string>30 229 1 229 1 173 30 173</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>run.png</string>
+            <key>size</key>
+            <string>{53,230}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:993ed275de491cc76c96536ab68dc734:29c65f96887ea131a44984569b5db248:6290a42444d497ec9c3e7c82966554c5$</string>
+            <key>textureFileName</key>
+            <string>run.png</string>
+        </dict>
+    </dict>
+</plist>

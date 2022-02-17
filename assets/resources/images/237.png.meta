@@ -2,7 +2,7 @@
   "ver": "1.0.22",
   "importer": "image",
   "imported": true,
-  "uuid": "0e38e493-1fa6-4474-81f1-1f4f344ac7d8",
+  "uuid": "05960a41-c204-4fc0-a445-09e6bff8a70d",
   "files": [
     ".png",
     ".json"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "0e38e493-1fa6-4474-81f1-1f4f344ac7d8@6c48a",
-      "displayName": "6",
+      "uuid": "05960a41-c204-4fc0-a445-09e6bff8a70d@6c48a",
+      "displayName": "237",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "0e38e493-1fa6-4474-81f1-1f4f344ac7d8",
+        "imageUuidOrDatabaseUri": "05960a41-c204-4fc0-a445-09e6bff8a70d",
         "minfilter": "linear",
         "magfilter": "linear",
         "mipfilter": "none",
@@ -33,8 +33,8 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "0e38e493-1fa6-4474-81f1-1f4f344ac7d8@f9941",
-      "displayName": "6",
+      "uuid": "05960a41-c204-4fc0-a445-09e6bff8a70d@f9941",
+      "displayName": "237",
       "id": "f9941",
       "name": "spriteFrame",
       "userData": {
@@ -45,17 +45,17 @@
         "offsetY": 0,
         "trimX": 0,
         "trimY": 0,
-        "width": 20,
-        "height": 61,
-        "rawWidth": 20,
-        "rawHeight": 61,
+        "width": 40,
+        "height": 57,
+        "rawWidth": 40,
+        "rawHeight": 57,
         "borderTop": 0,
         "borderBottom": 0,
         "borderLeft": 0,
         "borderRight": 0,
         "packable": true,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "0e38e493-1fa6-4474-81f1-1f4f344ac7d8@6c48a",
+        "imageUuidOrDatabaseUri": "05960a41-c204-4fc0-a445-09e6bff8a70d@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.9",
@@ -69,6 +69,6 @@
   "userData": {
     "type": "sprite-frame",
     "hasAlpha": true,
-    "redirect": "0e38e493-1fa6-4474-81f1-1f4f344ac7d8@f9941"
+    "redirect": "05960a41-c204-4fc0-a445-09e6bff8a70d@f9941"
   }
 }
