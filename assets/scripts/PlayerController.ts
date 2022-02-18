@@ -25,6 +25,10 @@ export class PlayerControl extends Component {
 
     @property
     moveSpeed: number = 100
+    @property
+    maxY: number = 175
+    @property
+    maxX: number = 455
 
 
     move: Vec4 = new Vec4(0, 0, 0, 0)
@@ -133,27 +137,40 @@ export class PlayerControl extends Component {
                 this.startRunAnimation()
             }
             this.node.setScale(1, 1, 1)
-            this.node.setPosition(new Vec3(this.node.position.x + this.moveSpeed * deltaTime, this.node.position.y, 0))
+            // 计算将要移动是否超出范围
+            const pos = new Vec3(this.node.position.x + this.moveSpeed * deltaTime, this.node.position.y, 0)
+            if (this.canMove(pos)) {
+                this.node.setPosition(pos)
+            }
         } else if (this.move.x < 0) {
             b = true
             if (!this.movePlay) {
                 this.startRunAnimation()
             }
             this.node.setScale(-1, 1, 1)
-            this.node.setPosition(new Vec3(this.node.position.x - this.moveSpeed * deltaTime, this.node.position.y, 0))
+            const pos = new Vec3(this.node.position.x - this.moveSpeed * deltaTime, this.node.position.y, 0)
+            if (this.canMove(pos)) {
+                this.node.setPosition(pos)
+            }
         }
         if (this.move.y > 0) {
             b = true
             if (!this.movePlay) {
                 this.startRunAnimation()
             }
-            this.node.setPosition(new Vec3(this.node.position.x, this.node.position.y + (this.moveSpeed * deltaTime / 2), 0))
+            const pos = new Vec3(this.node.position.x, this.node.position.y + (this.moveSpeed * deltaTime / 2), 0)
+            if (this.canMove(pos)) {
+                this.node.setPosition(pos)
+            }
         } else if (this.move.y < 0) {
             b = true
             if (!this.movePlay) {
                 this.startRunAnimation()
             }
-            this.node.setPosition(new Vec3(this.node.position.x , this.node.position.y - (this.moveSpeed * deltaTime / 2), 0))
+            const pos = new Vec3(this.node.position.x , this.node.position.y - (this.moveSpeed * deltaTime / 2), 0)
+            if (this.canMove(pos)) {
+                this.node.setPosition(pos)
+            }
         }
         if (!b) {
             this.stopRunAnimation()
@@ -171,6 +188,16 @@ export class PlayerControl extends Component {
             this.getComponent(Sprite).spriteFrame = SpriteFrame.createWithImage(img)
         })
         this.movePlay = false
+    }
+    canMove(pos: Vec3) {
+        const x = pos.x
+        const y = pos.y
+        const a = (x*x)/(this.maxX*this.maxX) + (y*y) / (this.maxY*this.maxY) - 1
+        if (a > 0) {
+            return false
+        } else {
+            return true
+        }
     }
 }
 
