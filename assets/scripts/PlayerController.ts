@@ -1,5 +1,6 @@
 
-import { _decorator, Component, Node, input, Input, KeyCode, Vec3, Vec2, Vec4, Animation, Sprite, resources, SpriteFrame, ImageAsset } from 'cc';
+import { _decorator, Component, Node, input, Input, KeyCode, Vec3, Vec2, Vec4, Animation, Sprite, resources, SpriteFrame, 
+    ImageAsset, Collider2D, BoxCollider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, EPhysics2DDrawFlags, } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
@@ -35,35 +36,67 @@ export class PlayerControl extends Component {
     movePlay: boolean = false
 
     start () {
+        PhysicsSystem2D.instance.enable = true
+        PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.Aabb | 
+        EPhysics2DDrawFlags.Pair | 
+        EPhysics2DDrawFlags.CenterOfMass |
+        EPhysics2DDrawFlags.Joint |
+        EPhysics2DDrawFlags.Shape
         resources.preload('images/zhanli', SpriteFrame)
         input.on(Input.EventType.KEY_DOWN, this.moveKeyDown, this)
         input.on(Input.EventType.KEY_UP, this.moveKeyUp, this)
+        // 注册碰撞
+        // 注册单个碰撞体的回调函数
+        // let collider = this.getComponent(BoxCollider2D);
+        // console.log("collider", collider)
+        // if (collider) {
+        //     collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+        //     collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
+        // }
+        // 注册全局碰撞回调函数
+        if (PhysicsSystem2D.instance) {
+            PhysicsSystem2D.instance.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+            PhysicsSystem2D.instance.on(Contact2DType.END_CONTACT, this.onEndContact, this);
+        }
+
+    }
+    onBeginContact(selfCollider: BoxCollider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        // 只在两个碰撞体开始接触时被调用一次
+        console.log('onBeginContact')
+    }
+    onEndContact(selfCollider: BoxCollider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        // 只在两个碰撞体结束接触时被调用一次
+        console.log('onEndContact')
+    }
+    onPreSolve(selfCollider: BoxCollider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        // 每次将要处理碰撞体接触逻辑时被调用
+        console.log('onPreSolve')
+    }
+    onPostSolve(selfCollider: BoxCollider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        // 每次处理完碰撞体接触逻辑时被调用
+        console.log('onPostSolve');
     }
     moveKeyDown(event: any) {
         switch (event.keyCode) {
             case KeyCode.KEY_A:
-                console.log("A")
                 if (this.move.x > 0) {
                     this.move.z = this.move.x
                 }
                 this.move.x = -1
                 break
             case KeyCode.KEY_W:
-                console.log("W")
                 if (this.move.y < 0 ) {
                     this.move.w = this.move.y
                 }
                 this.move.y = 1
                 break
             case KeyCode.KEY_S:
-                console.log("S")
                 if (this.move.y > 0 ) {
                     this.move.w = this.move.y
                 }
                 this.move.y = -1
                 break
             case KeyCode.KEY_D:
-                console.log("D")
                 if (this.move.x < 0) {
                     this.move.z = this.move.x
                 }
@@ -187,6 +220,9 @@ export class PlayerControl extends Component {
         resources.load("images/zhanli", ImageAsset, (err: any, img) => {
             this.getComponent(Sprite).spriteFrame = SpriteFrame.createWithImage(img)
         })
+        let collider = this.getComponent(BoxCollider2D)
+        collider.size.x = 18
+        collider.size.y = 57
         this.movePlay = false
     }
     canMove(pos: Vec3) {
