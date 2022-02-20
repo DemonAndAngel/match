@@ -1,0 +1,14 @@
+{
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "ATTACK"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 1,
+      "1": 0
+    }
+  }
+}

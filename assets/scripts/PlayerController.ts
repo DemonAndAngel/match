@@ -1,6 +1,6 @@
 
 import { _decorator, Component, Node, input, Input, KeyCode, Vec3, Vec2, Vec4, Animation, Sprite, resources, SpriteFrame, 
-    ImageAsset, Collider2D, BoxCollider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, EPhysics2DDrawFlags, } from 'cc';
+    ImageAsset, Collider2D, BoxCollider2D, Contact2DType, IPhysics2DContact, ERigidBody2DType, PhysicsSystem2D, EPhysics2DDrawFlags, RigidBody2D, } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
@@ -42,7 +42,6 @@ export class PlayerControl extends Component {
         // 注册碰撞
         // 注册单个碰撞体的回调函数
         let collider = this.getComponent(BoxCollider2D);
-        console.log("collider", collider)
         if (collider) {
             collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
             collider.on(Contact2DType.POST_SOLVE, this.onPostSolve, this);
@@ -106,6 +105,11 @@ export class PlayerControl extends Component {
                     ani.play("gongji1")
                     setTimeout(()=>{
                         this.attack = 2
+                        let attack = this.node.getChildByName("attack")
+                        if (attack) {
+                            attack.destroy()
+                        }
+                        this.stopRunAnimation()
                     }, 380)
                 } else if (this.attack == 2) {
                     this.attack = 3
@@ -180,7 +184,25 @@ export class PlayerControl extends Component {
     update (deltaTime: number) {
         // [4]
         if (this.attack == 1) {
-
+            this.attack = 2
+            // 添加监听
+            // 新建节点
+            let attack = new Node("attack")
+            attack.setParent(this.node)
+            let rigidBody = attack.addComponent(RigidBody2D)
+            rigidBody.group = 1
+            rigidBody.type = ERigidBody2DType.Kinematic
+            rigidBody.enabledContactListener = true
+            let collider = attack.addComponent(BoxCollider2D)
+            collider.size.x = 45
+            collider.size.y = 20
+            collider.offset.y = 18
+            if (this.node.scale.x < 0) {
+                collider.offset.x = -20
+            } else {
+                collider.offset.x = 20
+            }
+            collider.apply()
         }else if (this.attack == 0){
             let b = false
             if (this.move.x > 0) {
@@ -241,6 +263,8 @@ export class PlayerControl extends Component {
             this.getComponent(Sprite).spriteFrame = SpriteFrame.createWithImage(img)
         })
         let collider = this.getComponent(BoxCollider2D)
+        collider.offset.x = 0
+        collider.offset.y = 0
         collider.size.x = 38
         collider.size.y = 100
         collider.apply()
