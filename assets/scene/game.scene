@@ -489,20 +489,6 @@
     "_id": "4bBYHYPHBEqoZVRipOhRVS"
   },
   {
-    "__type__": "2e700IvaNVMjYa27ve2FmuW",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 10
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "moveSpeed": 200,
-    "maxY": 175,
-    "maxX": 455,
-    "_id": "9adb5fplJGI4VpCu7BC/gN"
-  },
-  {
     "__type__": "cc.RigidBody2D",
     "_name": "",
     "_objFlags": 0,
@@ -555,6 +541,17 @@
       "height": 100
     },
     "_id": "8dQlImsYdCYJrxtymrMpGd"
+  },
+  {
+    "__type__": "ae2eezMlBVMH6kq5SrWGk5j",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 10
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_id": "d6brP+n6VOy5NcTKGQOrLd"
   },
   {
     "__type__": "cc.UITransform",

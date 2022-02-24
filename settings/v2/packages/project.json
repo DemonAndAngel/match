@@ -4,11 +4,16 @@
       {
         "index": 1,
         "name": "ATTACK"
+      },
+      {
+        "index": 2,
+        "name": "ENEMY"
       }
     ],
     "collisionMatrix": {
-      "0": 1,
-      "1": 0
+      "0": 3,
+      "1": 7,
+      "2": 2
     }
   }
 }
