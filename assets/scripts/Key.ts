@@ -3,23 +3,34 @@ export enum KeyType {
     KeyDown = 1,
     KeyUp = 2,
 }
-export class Key {
-    status: KeyType
+export class KeyStatus {
     downTime: number
     upTime: number
-    interval: number // 按下到抬起间隔
+    interval: number
     constructor(){
-        this.status = KeyType.None
+        this.downTime = 0
+        this.upTime = 0
         this.interval = 0
     }
+}
+export class Key {
+    status: KeyType
+    press = {
+        last: new KeyStatus(),
+        now: new KeyStatus()
+    }
+    constructor(){
+        this.status = KeyType.None
+    }
     setDown() {
-        this.downTime = Date.now()
+        this.press.last = this.press.now
+        this.press.now.downTime = Date.now()
         this.status = KeyType.KeyDown
     }
     setUp() {
-        this.upTime = Date.now()
+        this.press.now.upTime = Date.now()
         this.status = KeyType.KeyUp
-        this.interval = this.upTime - this.downTime
+        this.press.now.interval = this.press.now.upTime - this.press.now.downTime
     }
 }
 export function NewKey() {

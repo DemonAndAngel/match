@@ -474,11 +474,7 @@
         "__expectedType__": "cc.AnimationClip"
       },
       {
-        "__uuid__": "c644a1db-9619-48a6-b633-0241f2804acb",
-        "__expectedType__": "cc.AnimationClip"
-      },
-      {
-        "__uuid__": "29a3e925-440c-47f0-bee4-885f1c93d683",
+        "__uuid__": "99f0a688-de48-4ffb-bcbf-4a8f84835d16",
         "__expectedType__": "cc.AnimationClip"
       }
     ],
@@ -551,6 +547,9 @@
     },
     "_enabled": true,
     "__prefab": null,
+    "moveSpeed": 100,
+    "moveMaxY": 175,
+    "moveMaxX": 455,
     "_id": "d6brP+n6VOy5NcTKGQOrLd"
   },
   {
