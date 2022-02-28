@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, PhysicsSystem2D, EPhysics2DDrawFlags, director } from 'cc';
+import { _decorator, Component, Contact2DType, PhysicsSystem2D, Collider2D, IPhysics2DContact, EPhysics2DDrawFlags } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
@@ -30,7 +30,26 @@ export class BgController extends Component {
         EPhysics2DDrawFlags.CenterOfMass |
         EPhysics2DDrawFlags.Joint |
         EPhysics2DDrawFlags.Shape
+
+        // 注册全局碰撞回调函数
+        // if (PhysicsSystem2D.instance) {
+        //     PhysicsSystem2D.instance.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+        //     PhysicsSystem2D.instance.on(Contact2DType.END_CONTACT, this.onEndContact, this);
+        // }
         
+    }
+
+    onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        // 只在两个碰撞体开始接触时被调用一次
+        console.log("self group", selfCollider.group)
+        console.log("self tag", selfCollider.tag)
+        console.log("other group", otherCollider.group)
+        console.log("other tag", otherCollider.tag)
+        console.log('onBeginContact')
+    }
+    onEndContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        // 只在两个碰撞体结束接触时被调用一次
+        console.log('onEndContact')
     }
 
     start () {

@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Vec4, BoxCollider2D, Contact2DType, Collider2D, resources, ImageAsset, SpriteFrame, Sprite, IPhysics2DContact, input, Input, __private, KeyCode, Vec2, Vec3, Animation } from 'cc';
+import { _decorator, Component, Node, Vec4, BoxCollider2D, ERigidBody2DType, RigidBody2D, Contact2DType, Collider2D, resources, ImageAsset, SpriteFrame, Sprite, IPhysics2DContact, input, Input, __private, KeyCode, Vec2, Vec3, Animation, CircleCollider2D } from 'cc';
 import { PlayerType, AttackType, MoveType } from './PlayerType';
 const { ccclass, property } = _decorator;
 
@@ -38,10 +38,6 @@ export class PlayerController extends Component {
             offset: new Vec2,
             size: new Vec2,
         },
-        // key: {
-        //     listenKeys: [KeyCode.KEY_W,KeyCode.KEY_S,KeyCode.KEY_A,KeyCode.KEY_D,KeyCode.KEY_J,KeyCode.KEY_K,KeyCode.KEY_L,KeyCode.KEY_U,KeyCode.KEY_I,KeyCode.KEY_O],
-        //     key: []
-        // },
         move: {
             v: new Vec2()
         },
@@ -53,23 +49,15 @@ export class PlayerController extends Component {
             timeOutTimer: 0, // 超时定时器
         }
     }
-    // 初始化按键
-    initKey() {
-        // this.state.key.listenKeys.forEach((item, k)=>{
-        //     this.state.key.key[item] = NewKey()
-        // })
-    }
-
     start () {
-        // this.initKey()
         // 添加监听
-        let collider = this.getComponent(BoxCollider2D);
-        if (collider) {
-            collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
-            collider.on(Contact2DType.POST_SOLVE, this.onPostSolve, this);
-            collider.on(Contact2DType.PRE_SOLVE, this.onPreSolve, this);
-            collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
-        }
+        let collider = this.getComponent(BoxCollider2D)
+        // if (collider) {
+        //     collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+        //     collider.on(Contact2DType.POST_SOLVE, this.onPostSolve, this);
+        //     collider.on(Contact2DType.PRE_SOLVE, this.onPreSolve, this);
+        //     collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
+        // }
         this.state.box.size = new Vec2(collider.size.x, collider.size.y)
         this.state.box.offset = new Vec2(collider.offset.x, collider.offset.y)
         // 按键
@@ -122,8 +110,6 @@ export class PlayerController extends Component {
                     this.setAttackTimeout(PlayerType.AttackFourthE)
                 }
                 break
-            case KeyCode.KEY_K:
-                break
         }
     }
     setAttackTimeout(status: PlayerType) {
@@ -133,6 +119,8 @@ export class PlayerController extends Component {
         this.state.attack.timer = setTimeout(()=>{
             // 这里进入下一状态
             this.setStateStatus(status)
+            // 清除攻击节点
+            this.removeAttackCollider()
             this.state.attack.timeOutTimer = setTimeout(()=>{
                 // 这里变回之前状态
                 this.setStateStatus(PlayerType.None)
@@ -188,14 +176,8 @@ export class PlayerController extends Component {
                 if (this.state.lastStatus != PlayerType.None) {
                     resources.load("images/站立2", ImageAsset, (err: any, img) => {
                         this.getComponent(Sprite).spriteFrame = SpriteFrame.createWithImage(img)
+                        this.resetNoneCollider()
                     })
-                    // 改变box
-                    const collider = this.getComponent(BoxCollider2D)
-                    collider.size.x = this.state.box.size.x
-                    collider.size.y = this.state.box.size.y
-                    collider.offset.x = this.state.box.offset.x
-                    collider.offset.y = this.state.box.offset.y
-                    collider.apply()
                 }
                 break
             case PlayerType.MoveS:
@@ -220,6 +202,46 @@ export class PlayerController extends Component {
                 break
         }
     }
+    genAttackCollider(offsetX: number, offsetY: number, sizeX: number, sizeY: number) {
+        this.resetNoneCollider()
+        // 添加碰撞体
+        let attack = new Node("attack")
+        attack.setParent(this.node)
+        let rigidBody = attack.addComponent(RigidBody2D)
+        rigidBody.group = 1
+        rigidBody.type = ERigidBody2DType.Static
+        rigidBody.enabledContactListener = true
+        let collider = attack.addComponent(BoxCollider2D)
+        collider.sensor = true
+        collider.group = 1
+        collider.size.x = sizeX
+        collider.size.y = sizeY
+        collider.offset.y = offsetY
+        if (this.node.scale.x < 0) {
+            collider.offset.x = -offsetX
+        } else {
+            collider.offset.x = offsetX
+        }
+        collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+        collider.on(Contact2DType.POST_SOLVE, this.onPostSolve, this);
+        collider.on(Contact2DType.PRE_SOLVE, this.onPreSolve, this);
+        collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
+        collider.apply()
+    }
+    removeAttackCollider() {
+        const attack = this.node.getChildByName("attack")
+        if (attack) {
+            attack.destroy()
+        }
+    }
+    resetNoneCollider() {
+        const collider = this.getComponent(BoxCollider2D)
+        collider.size.x = this.state.box.size.x
+        collider.size.y = this.state.box.size.y
+        collider.offset.x = this.state.box.offset.x
+        collider.offset.y = this.state.box.offset.y
+        collider.apply()
+    }
     attackFirst() {
         // 切换攻击
         if (MoveType.indexOf(this.state.lastStatus) > -1) {
@@ -228,24 +250,32 @@ export class PlayerController extends Component {
         }
         resources.load("images/攻击1", ImageAsset, (err: any, img) => {
             this.getComponent(Sprite).spriteFrame = SpriteFrame.createWithImage(img)
+            // 添加碰撞体
+            this.genAttackCollider(20, 15, 45, 30)
         })
     }
     attackSecond() {
         // 切换攻击
         resources.load("images/攻击2", ImageAsset, (err: any, img) => {
             this.getComponent(Sprite).spriteFrame = SpriteFrame.createWithImage(img)
+            // 添加碰撞体
+            this.genAttackCollider(20, 15, 45, 30)
         })
     }
     attackThird() {
         // 切换攻击
         resources.load("images/攻击3", ImageAsset, (err: any, img) => {
             this.getComponent(Sprite).spriteFrame = SpriteFrame.createWithImage(img)
+            // 添加碰撞体
+            this.genAttackCollider(20, -10, 45, 40)
         })
     }
     attackFourth() {
         // 切换攻击
         resources.load("images/攻击4", ImageAsset, (err: any, img) => {
             this.getComponent(Sprite).spriteFrame = SpriteFrame.createWithImage(img)
+            // 添加碰撞体
+            this.genAttackCollider(20, -10, 45, 40)
         })
     }
     playRunAni() {
