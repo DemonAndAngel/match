@@ -52,12 +52,12 @@ export class PlayerController extends Component {
     start () {
         // 添加监听
         let collider = this.getComponent(BoxCollider2D)
-        // if (collider) {
-        //     collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
-        //     collider.on(Contact2DType.POST_SOLVE, this.onPostSolve, this);
-        //     collider.on(Contact2DType.PRE_SOLVE, this.onPreSolve, this);
-        //     collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
-        // }
+        if (collider) {
+            collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+            collider.on(Contact2DType.POST_SOLVE, this.onPostSolve, this);
+            collider.on(Contact2DType.PRE_SOLVE, this.onPreSolve, this);
+            collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
+        }
         this.state.box.size = new Vec2(collider.size.x, collider.size.y)
         this.state.box.offset = new Vec2(collider.offset.x, collider.offset.y)
         // 按键

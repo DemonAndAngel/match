@@ -14,6 +14,20 @@
       "0": 7,
       "1": 7,
       "2": 7
+    },
+    "defaultMaterial": {
+      "restitution": 0,
+      "spinningFriction": 0,
+      "rollingFriction": 0,
+      "friction": 0
+    },
+    "maxSubSteps": 1,
+    "fixedTimeStep": 1,
+    "autoSimulation": true,
+    "sleepThreshold": 0,
+    "allowSleep": false,
+    "gravity": {
+      "y": 0
     }
   }
 }
